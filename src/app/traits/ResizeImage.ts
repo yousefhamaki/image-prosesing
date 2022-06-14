@@ -1,10 +1,15 @@
-import sharp from "sharp"
+import sharp from "sharp";
 
-const ResizeImage = async (existPath:string, lastPath:string, width:number, height: number)=>{
-    const result: sharp.OutputInfo = await sharp(existPath)
-            .resize({width: Number(width), height: Number(height)})
-            .toFile(lastPath)
-     return result
-}
+const ResizeImage = async (
+  existPath: string,
+  lastPath: string,
+  width: number,
+  height: number
+) => {
+  const result: sharp.OutputInfo = await sharp(existPath)
+    .resize({ width: Number(width), height: Number(height) })
+    .toFile(lastPath);
+  return result;
+};
 
-export default ResizeImage
+export default ResizeImage;

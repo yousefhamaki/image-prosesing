@@ -9,7 +9,8 @@
     "start": "nodemon dist/App.js",
     "dev": "nodemon src/App.ts",
     "lint": "eslint src/*.ts",
-    "lint:f": "eslint src/*.ts --fix"
+    "lint:f": "eslint src/*.ts --fix",
+    "format": "prettier --write src/**/*.ts"
   },
   "author": "yousef hamaki",
   "license": "ISC",
