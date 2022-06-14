@@ -1,8 +1,7 @@
-import {RequestHandler} from "express"
 
-function QueryCheck(query: {[key:string]: String|number|any}, params: {[key: string]:string}){
+function QueryCheck(query: {[key:string]: string | qs.ParsedQs | string[] | qs.ParsedQs[] | undefined}, params: {[key: string]:string}){
     const result: string[] = []
-    for(var key in params){
+    for(const key in params){
         const stand: string[] = params[key].split("|")
         if(stand.indexOf("required") > -1){
             if(!query[key]){

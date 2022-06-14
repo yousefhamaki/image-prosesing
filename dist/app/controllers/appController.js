@@ -44,9 +44,9 @@ exports.upload = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         else {
             //should resize image and save it in resize folder then return the image resized
-            yield (0, ResizeImage_1.default)(existPath, lastPath, Number(width), Number(height)).then((value) => {
+            yield (0, ResizeImage_1.default)(existPath, lastPath, Number(width), Number(height)).then(() => {
                 res.send(`<img src=${`images/resize/${resized}`} />`);
-            }).catch(err => {
+            }).catch(() => {
                 const error = "Oops! image failed resize please try again";
                 res.send(error);
             });

@@ -1,7 +1,6 @@
 import {Request, Response } from "express"
 import SearchFile from "./../traits/SearchFile"
 import QueryCheck from "../traits/CheckQuery"
-import sharp from "sharp"
 import ResizeImage from "../traits/ResizeImage"
 
 const imagesPath = __dirname + "/../../../images/"
@@ -13,8 +12,8 @@ exports.Home = (req: Request, res: Response)=>{
 
 exports.upload = async (req: Request, res: Response)=>{
     /* request query handler */
-    const required: any = {image: "required", width: "required|number", height: "required|number"}
-    const requestInfo: any = QueryCheck(req.query, required)
+    const required: { [key: string]: string; } = {image: "required", width: "required|number", height: "required|number"}
+    const requestInfo: string[] = QueryCheck(req.query, required)
     if(requestInfo.length > 0){
         return res.send(requestInfo[0])
     }
@@ -36,9 +35,9 @@ exports.upload = async (req: Request, res: Response)=>{
             res.send(`<img src=${`images/resize/${resized}`} />`)
         }else{
             //should resize image and save it in resize folder then return the image resized
-            await ResizeImage(existPath, lastPath, Number(width), Number(height)).then((value: object) =>{    
+            await ResizeImage(existPath, lastPath, Number(width), Number(height)).then(() =>{    
                 res.send(`<img src=${`images/resize/${resized}`} />`)
-            }).catch( err => {
+            }).catch(() => {
                 const error: string = "Oops! image failed resize please try again"
                 res.send(error)
             });   

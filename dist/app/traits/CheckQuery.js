@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 function QueryCheck(query, params) {
     const result = [];
-    for (var key in params) {
+    for (const key in params) {
         const stand = params[key].split("|");
         if (stand.indexOf("required") > -1) {
             if (!query[key]) {
