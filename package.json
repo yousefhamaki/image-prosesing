@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npx tsc && jasmine",
+    "build": "tsc",
     "start": "nodemon dist/App.js",
     "dev": "nodemon src/App.ts"
   },
