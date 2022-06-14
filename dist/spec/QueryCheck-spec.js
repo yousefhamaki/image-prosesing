@@ -4,7 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const CheckQuery_1 = __importDefault(require("./../app/traits/CheckQuery"));
-const required = { image: "required", width: "required|number", height: "required|number" };
+const required = {
+    image: "required",
+    width: "required|number",
+    height: "required|number",
+};
 it("expect the length of errors equal (1)", () => {
     const query = { width: "250", height: "256d", image: "p2" };
     expect((0, CheckQuery_1.default)(query, required).length).toEqual(1);

@@ -22,7 +22,11 @@ exports.Home = (req, res) => {
 };
 exports.upload = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     /* request query handler */
-    const required = { image: "required", width: "required|number", height: "required|number" };
+    const required = {
+        image: "required",
+        width: "required|number",
+        height: "required|number",
+    };
     const requestInfo = (0, CheckQuery_1.default)(req.query, required);
     if (requestInfo.length > 0) {
         return res.send(requestInfo[0]);
@@ -40,15 +44,17 @@ exports.upload = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (exist) {
         if (resize) {
             //should return image from resize folder
-            res.send(`<img src=${`images/resize/${resized}`} />`);
+            return res.send(`<img src=${`images/resize/${resized}`} />`);
         }
         else {
             //should resize image and save it in resize folder then return the image resized
-            yield (0, ResizeImage_1.default)(existPath, lastPath, Number(width), Number(height)).then(() => {
-                res.send(`<img src=${`images/resize/${resized}`} />`);
-            }).catch(() => {
+            yield (0, ResizeImage_1.default)(existPath, lastPath, Number(width), Number(height))
+                .then(() => {
+                return res.send(`<img src=${`images/resize/${resized}`} />`);
+            })
+                .catch(() => {
                 const error = "Oops! image failed resize please try again";
-                res.send(error);
+                return res.send(error);
             });
         }
     }

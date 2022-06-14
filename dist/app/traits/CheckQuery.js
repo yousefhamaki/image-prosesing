@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function QueryCheck(query, params) {
     const result = [];
     for (const key in params) {
