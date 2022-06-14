@@ -1,9 +1,10 @@
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 function QueryCheck(
   query: {
     [key: string]: string | qs.ParsedQs | string[] | qs.ParsedQs[] | undefined;
   },
   params: { [key: string]: string }
-) {
+): string[] {
   const result: string[] = [];
   for (const key in params) {
     const stand: string[] = params[key].split("|");

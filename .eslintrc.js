@@ -20,5 +20,11 @@ module.exports = {
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/no-inferrable-types": "off",
+    "@typescript-eslint/explicit-function-return-type": [
+      "error",
+      {
+        allowedNames: ["ignoredFunctionName", "ignoredMethodName"],
+      },
+    ],
   },
 };

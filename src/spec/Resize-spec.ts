@@ -1,11 +1,12 @@
 import sharp from "sharp";
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const ResizeImage = async (
   existPath: string,
   lastPath: string,
   width: number,
   height: number
-) => {
+): Promise<boolean> => {
   const result = await sharp(existPath)
     .resize({ width: Number(width), height: Number(height) })
     .toFile(lastPath)

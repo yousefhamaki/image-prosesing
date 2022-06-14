@@ -6,11 +6,14 @@ import ResizeImage from "../traits/ResizeImage";
 const imagesPath = __dirname + "/../../../images/";
 const resizePath = __dirname + "/../../../images/resize/";
 
-exports.Home = (req: Request, res: Response) => {
+exports.Home = (req: Request, res: Response): void => {
   res.send("Hello from image prosessing api");
 };
 
-exports.upload = async (req: Request, res: Response) => {
+exports.upload = async (
+  req: Request,
+  res: Response
+): Promise<typeof exports.upload> => {
   /* request query handler */
   const required: { [key: string]: string } = {
     image: "required",
@@ -39,16 +42,16 @@ exports.upload = async (req: Request, res: Response) => {
   if (exist) {
     if (resize) {
       //should return image from resize folder
-      res.send(`<img src=${`images/resize/${resized}`} />`);
+      return res.send(`<img src=${`images/resize/${resized}`} />`);
     } else {
       //should resize image and save it in resize folder then return the image resized
       await ResizeImage(existPath, lastPath, Number(width), Number(height))
         .then(() => {
-          res.send(`<img src=${`images/resize/${resized}`} />`);
+          return res.send(`<img src=${`images/resize/${resized}`} />`);
         })
         .catch(() => {
           const error: string = "Oops! image failed resize please try again";
-          res.send(error);
+          return res.send(error);
         });
     }
   } else {

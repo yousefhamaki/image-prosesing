@@ -5,7 +5,7 @@ const ResizeImage = async (
   lastPath: string,
   width: number,
   height: number
-) => {
+): Promise<object> => {
   const result: sharp.OutputInfo = await sharp(existPath)
     .resize({ width: Number(width), height: Number(height) })
     .toFile(lastPath);
