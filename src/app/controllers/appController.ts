@@ -2,6 +2,7 @@ import {Request, Response } from "express"
 import SearchFile from "./../traits/SearchFile"
 import QueryCheck from "../traits/CheckQuery"
 import sharp from "sharp"
+import ResizeImage from "../traits/ResizeImage"
 
 const imagesPath = __dirname + "/../../../images/"
 const resizePath = __dirname + "/../../../images/resize/"
@@ -12,22 +13,22 @@ exports.Home = (req: Request, res: Response)=>{
 
 exports.upload = async (req: Request, res: Response)=>{
     /* request query handler */
-    const required = {image: "required", width: "required|number", height: "required|number"}
-    const requestInfo = QueryCheck(req.query, required)
+    const required: any = {image: "required", width: "required|number", height: "required|number"}
+    const requestInfo: any = QueryCheck(req.query, required)
     if(requestInfo.length > 0){
         return res.send(requestInfo[0])
     }
 
     /* handler image exist and resize exist */
-    const image = req.query.image
-    const width = req.query.width
-    const height = req.query.height
-    const original = image + ".jpg"
-    const resized = `${image}_${width}-${height}.jpg`
-    const existPath: any = imagesPath + original
-    const lastPath: any = `${resizePath + resized}`
-    const exist = SearchFile(existPath)
-    const resize = SearchFile(lastPath)
+    const image: string | qs.ParsedQs | string[] | qs.ParsedQs[] | undefined = req.query.image
+    const width: string | qs.ParsedQs | string[] | qs.ParsedQs[] | undefined = req.query.width
+    const height: string | qs.ParsedQs | string[] | qs.ParsedQs[] | undefined = req.query.height
+    const original: string = image + ".jpg"
+    const resized: string = `${image}_${width}-${height}.jpg`
+    const existPath: string = imagesPath + original
+    const lastPath: string = `${resizePath + resized}`
+    const exist: boolean = SearchFile(existPath)
+    const resize: boolean = SearchFile(lastPath)
 
     if(exist){
         if(resize){
@@ -35,19 +36,17 @@ exports.upload = async (req: Request, res: Response)=>{
             res.send(`<img src=${`images/resize/${resized}`} />`)
         }else{
             //should resize image and save it in resize folder then return the image resized
-            await sharp(existPath)
-            .resize({width: Number(width), height: Number(height)})
-            .toFile(lastPath)
-            .then(data=>{
+            await ResizeImage(existPath, lastPath, Number(width), Number(height)).then((value: object) =>{    
                 res.send(`<img src=${`images/resize/${resized}`} />`)
-            })
-            .catch(err=>{
-                res.send("Oops! image failed resize please try again")
-            })      
+            }).catch( err => {
+                const error: string = "Oops! image failed resize please try again"
+                res.send(error)
+            });   
         }
         
     }else{
-        return res.status(404).send("oops! image not found")
+        const errorImage: string = "oops! image not found"
+        return res.status(404).send(errorImage)
     }
 
 }

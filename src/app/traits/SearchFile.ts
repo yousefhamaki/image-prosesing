@@ -3,12 +3,12 @@ import fs from "fs"
 const SearchFile = (path: string)=>{
     try{
         if(fs.existsSync(path)){
-            return true
+            return true;
         }else{
-            return false
+            return false;
         }
     }catch(err){
-        return false
+        return false;
     }
 }
 

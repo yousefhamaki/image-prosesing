@@ -12,10 +12,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const ResizeImage_1 = __importDefault(require("../app/traits/ResizeImage"));
-it("expect resized to be (true)", () => __awaiter(void 0, void 0, void 0, function* () {
-    expect(yield (0, ResizeImage_1.default)(`${__dirname}/../../../images/p2.jpg`, "images/resized/p2_250-40.png", 250, 40)).toBeFalse;
+const sharp_1 = __importDefault(require("sharp"));
+const ResizeImage = (existPath, lastPath, width, height) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield (0, sharp_1.default)(existPath)
+        .resize({ width: Number(width), height: Number(height) })
+        .toFile(lastPath)
+        .then(data => {
+        return true;
+    }).catch(err => {
+        return false;
+    });
+    return result;
+});
+it("expect resized to throw error", () => __awaiter(void 0, void 0, void 0, function* () {
+    expect(yield ResizeImage(`${__dirname}/../../../images/p2.jpg`, "images/resized/p2_250-40.png", 250, 40)).toBeFalse;
 }));
-it("expect resized to be (false)", () => __awaiter(void 0, void 0, void 0, function* () {
-    expect(yield (0, ResizeImage_1.default)("/images/p2", "images/resized/p2_250-400.png", 250, 400)).toBeFalse;
+it("expect resized width to equal (250)", () => __awaiter(void 0, void 0, void 0, function* () {
+    expect(yield (yield ResizeImage("images/p2.jpg", "images/resized/p2_250-400.png", 251, 401))).toBeTrue;
 }));

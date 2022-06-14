@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const SearchFile_1 = __importDefault(require("./../traits/SearchFile"));
 const CheckQuery_1 = __importDefault(require("../traits/CheckQuery"));
-const sharp_1 = __importDefault(require("sharp"));
+const ResizeImage_1 = __importDefault(require("../traits/ResizeImage"));
 const imagesPath = __dirname + "/../../../images/";
 const resizePath = __dirname + "/../../../images/resize/";
 exports.Home = (req, res) => {
@@ -44,19 +44,17 @@ exports.upload = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         else {
             //should resize image and save it in resize folder then return the image resized
-            yield (0, sharp_1.default)(existPath)
-                .resize({ width: Number(width), height: Number(height) })
-                .toFile(lastPath)
-                .then(data => {
+            yield (0, ResizeImage_1.default)(existPath, lastPath, Number(width), Number(height)).then((value) => {
                 res.send(`<img src=${`images/resize/${resized}`} />`);
-            })
-                .catch(err => {
-                res.send("Oops! image failed resize please try again");
+            }).catch(err => {
+                const error = "Oops! image failed resize please try again";
+                res.send(error);
             });
         }
     }
     else {
-        return res.status(404).send("oops! image not found");
+        const errorImage = "oops! image not found";
+        return res.status(404).send(errorImage);
     }
 });
 exports.default = exports;

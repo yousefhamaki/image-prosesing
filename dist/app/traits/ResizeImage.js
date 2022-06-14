@@ -14,14 +14,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const sharp_1 = __importDefault(require("sharp"));
 const ResizeImage = (existPath, lastPath, width, height) => __awaiter(void 0, void 0, void 0, function* () {
-    yield (0, sharp_1.default)(existPath)
+    const result = yield (0, sharp_1.default)(existPath)
         .resize({ width: Number(width), height: Number(height) })
-        .toFile(lastPath)
-        .then((data) => {
-        return true;
-    })
-        .catch((err) => {
-        return false;
-    });
+        .toFile(lastPath);
+    return result;
 });
 exports.default = ResizeImage;
